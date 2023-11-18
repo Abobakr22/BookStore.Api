@@ -2,6 +2,7 @@
 using BookStore.Api.Models;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace BookStore.Api.Repository
 {
