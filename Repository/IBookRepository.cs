@@ -1,4 +1,5 @@
 ﻿using BookStore.Api.Models;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace BookStore.Api.Repository
 {
@@ -15,5 +16,11 @@ namespace BookStore.Api.Repository
 
         //task of updating an existing book
         Task UpdateBookAsync(int BookId, BookModel bookModel);
+
+        //task of updating a property in an existing book
+        Task UpdateBookPatchAsync(int BookId, JsonPatchDocument bookModel);
+
+        //task of deleting an existing book from db
+        Task DeleteBookAsync(int BookId);
     }
 }

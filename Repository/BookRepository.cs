@@ -81,5 +81,25 @@ namespace BookStore.Api.Repository
             //}
 
         }
+
+        //implementing task for updating a specific property of an existing book in db
+        public async Task UpdateBookPatchAsync(int BookId, JsonPatchDocument bookModel)
+        {
+            var book = await _context.Books.FindAsync(BookId);
+            if (book != null)
+            {
+                bookModel.ApplyTo(book);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        //implementing task for deleting a book from db
+        public async Task DeleteBookAsync(int BookId)
+        {
+           var book = new Book() { Id = BookId };
+            
+            _context.Books.Remove(book);
+            await _context.SaveChangesAsync();
+        }
     }
 }

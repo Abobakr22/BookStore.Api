@@ -16,7 +16,7 @@ namespace BookStore.Api
             builder.Services.AddDbContext<BookStoreContext>(
                 options => options.UseSqlServer("Server = (localdb)\\MSSQLLocalDB;Database= BookStoreApi ;Integrated Security=True;")); 
            
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddNewtonsoftJson(); // to enable httppatch
             //add Dependency injection service for Book repository
             builder.Services.AddTransient<IBookRepository, BookRepository>();    
 

@@ -1,5 +1,6 @@
 ﻿using BookStore.Api.Models;
 using BookStore.Api.Repository;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.Api.Controllers
@@ -52,10 +53,20 @@ namespace BookStore.Api.Controllers
             return Ok();
         }
 
+        //create an action method (patch) for updating a specific property of an existing book in database
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdateBookPatch([FromBody] JsonPatchDocument bookModel, [FromRoute] int id)
+        {
+            await _bookRepository.UpdateBookPatchAsync(id, bookModel);
+            return Ok();
+        }
 
-
-
-
-
+        //create an action method (patch) for updating a specific property of an existing book in database
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBook( [FromRoute] int id)
+        {
+            await _bookRepository.DeleteBookAsync(id);
+            return Ok();
+        }
     }
 }
