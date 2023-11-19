@@ -24,6 +24,8 @@ namespace BookStore.Api
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddAutoMapper(typeof(BookRepository)); //using automapper
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

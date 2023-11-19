@@ -3,43 +3,52 @@ using BookStore.Api.Models;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.JsonPatch;
+using AutoMapper;
 
 namespace BookStore.Api.Repository
 {
     public class BookRepository : IBookRepository
     {
         private readonly BookStoreContext _context;
+        private readonly IMapper _mapper;
 
-        public BookRepository(BookStoreContext context)
+        public BookRepository(BookStoreContext context , IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
 
         //implementing task for getting all records from db
         public async Task<List<BookModel>> GetAllBooksAsync()
         {
-            var records = await _context.Books.Select(x => new BookModel()
-            {
-                Id = x.Id,
-                Title = x.Title,
-                Description = x.Description
-            }).ToListAsync();
+            //var records = await _context.Books.Select(x => new BookModel()
+            //{
+            //    Id = x.Id,
+            //    Title = x.Title,
+            //    Description = x.Description
+            //}).ToListAsync();
+            //return records;
 
-            return records;
+            //by using AutoMapper
+            var books = await _context.Books.ToListAsync();
+            return _mapper.Map<List<BookModel>>(books);
         }
 
         //implementing task for getting one record from db
         public async Task<BookModel> GetBookByIdAsync(int BookId)
         {
-            var record = await _context.Books.Where(x => x.Id == BookId).Select(x => new BookModel()
-            {
-                Id = x.Id,
-                Title = x.Title,
-                Description = x.Description
-            }).FirstOrDefaultAsync();
+            //var record = await _context.Books.Where(x => x.Id == BookId).Select(x => new BookModel()
+            //{
+            //    Id = x.Id,
+            //    Title = x.Title,
+            //    Description = x.Description
+            //}).FirstOrDefaultAsync();
+            //return record;
 
-            return record;
+            //by using automapper
+            var book = await _context.Books.FindAsync(BookId);
+            return _mapper.Map<BookModel>(book);
         }
 
         //implementing task for adding a new record to db
